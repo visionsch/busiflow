@@ -28,3 +28,5 @@ use the editor.
   own key and store it in Secrets.
 - **Secrets.** Lovable manages them. Do not put secret values in the repo.
 <!-- LOVABLE:END -->
+
+- ShopFlow's original backend lives in src/shopflow/backend and runs behind the catch-all route src/routes/api/$.ts; src/shopflow/shims/sdk.ts maps its storage/db/secrets calls onto Supabase (app_records table + app_transact RPC + app-files bucket) so the imported code stays unchanged.
