@@ -18,7 +18,7 @@ async function request(method: string, url: string, body?: unknown, config: Conf
     if (s) full += (full.includes("?") ? "&" : "?") + s;
   }
   const headers: Record<string, string> = { accept: "application/json", ...(config.headers || {}) };
-  let payload: BodyInit | undefined;
+  let payload: BodyInit | null = null;
   if (body !== undefined && method !== "GET") {
     headers["content-type"] = headers["content-type"] || "application/json";
     payload = typeof body === "string" ? body : JSON.stringify(body);

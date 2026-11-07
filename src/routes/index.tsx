@@ -5,10 +5,10 @@ import shopflowCss from "../shopflow/index.css?url";
 const App = lazy(() => import("../shopflow/App"));
 
 class AppErrorBoundary extends Component<{ children: ReactNode }, { hasError: boolean }> {
-  state = { hasError: false };
+  override state = { hasError: false };
   static getDerivedStateFromError() { return { hasError: true }; }
-  componentDidCatch(error: Error, info: ErrorInfo) { console.error("SHOPFLOW_RENDER_ERROR", error, info.componentStack); }
-  render() {
+  override componentDidCatch(error: Error, info: ErrorInfo) { console.error("SHOPFLOW_RENDER_ERROR", error, info.componentStack); }
+  override render() {
     if (this.state.hasError)
       return (
         <main role="alert" style={{ maxWidth: 640, margin: "12vh auto", padding: 24 }}>
