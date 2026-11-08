@@ -30,3 +30,4 @@ use the editor.
 <!-- LOVABLE:END -->
 
 - ShopFlow's original backend lives in src/shopflow/backend and runs behind the catch-all route src/routes/api/$.ts; src/shopflow/shims/sdk.ts maps its storage/db/secrets calls onto Supabase (app_records table + app_transact RPC + app-files bucket) so the imported code stays unchanged.
+- Use db.add/update/delete for standalone writes; db.tx methods only build operations for db.transact, so awaiting a builder never persists a record.
