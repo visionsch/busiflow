@@ -3,8 +3,8 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const store = vi.hoisted(() => new Map<string, Record<string, unknown>>());
 const add = vi.hoisted(() => vi.fn(async (table: string, rows: Record<string, unknown>[]) => {
-  for (const row of rows) store.set(`${table}/${row.id}`, { ...row });
-  return rows.map(row => row.id);
+  for (const row of rows) store.set(`${table}/${row['id']}`, { ...row });
+  return rows.map(row => row['id']);
 }));
 
 vi.mock("@/shopflow/shims/sdk", () => ({
@@ -27,6 +27,7 @@ vi.mock("@/shopflow/shims/sdk", () => ({
       const result = await handle({ event, body: JSON.parse(event.body || "{}") });
       if (result) return result;
     }
+    return undefined;
   },
 }));
 
@@ -66,7 +67,7 @@ describe("Push subscription persistence", () => {
     expect(response.statusCode).toBe(200);
     const saved = [...store.entries()].filter(([key]) => key.startsWith("push_subscriptions/"));
     expect(saved).toHaveLength(1);
-    expect(saved[0]?.[1].keys).toEqual({ p256dh: "public-key", auth: "new-auth" });
+    expect(saved[0]?.[1]['keys']).toEqual({ p256dh: "public-key", auth: "new-auth" });
     expect(add).toHaveBeenCalledOnce();
   });
 
