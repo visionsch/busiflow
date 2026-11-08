@@ -1,4 +1,4 @@
-// @vitest-environment node
+import { webcrypto } from "node:crypto";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const store = vi.hoisted(() => new Map<string, Record<string, unknown>>());
@@ -42,6 +42,7 @@ function subscribe(subscription: unknown, csrf = "test-csrf") {
 
 describe("Push subscription persistence", () => {
   beforeEach(() => {
+    vi.stubGlobal("crypto", webcrypto);
     store.clear();
     add.mockClear();
     store.set("sessions/test-session", { userId: "test-user", csrfToken: "test-csrf", expiresAt: Date.now() + 60000 });
